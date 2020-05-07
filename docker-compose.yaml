@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+   db:
+     image: mysql:5.7
+     volumes:
+       - db_data:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: +h!5Is$p4rtA
+       MYSQL_DATABASE: assets
+       MYSQL_USER: db_Service
+       MYSQL_PASSWORD: +h!5Is$p4rtA
+
+   wordpress:
+     depends_on:
+       - db
+     image: wordpress:latest
+     ports:
+       - "8080:80"
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: db_Service
+       WORDPRESS_DB_PASSWORD: +h!5Is$p4rtA
+       WORDPRESS_DB_NAME: assets
+volumes:
+    db_data: {}
